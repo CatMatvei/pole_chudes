@@ -1,4 +1,5 @@
-import random
+import random, os
+from time import sleep 
 
 
 class Player(object):
@@ -70,12 +71,15 @@ def print_alph(what_print):
 
 
 def screen(moover):
+	sleep(3)
+	os.system('cls')
 	print_word(pr_word)
 	print_alph(alph)
 	print(f'Ход {moover.name}, его HP = {moover.hp}')
 
 
 def game():
+	graveyard = 0
 	while True:
 		for player_name in ("player_one", "player_two", 'player_three', 'player_four'):
 			player = globals()[player_name]
@@ -88,11 +92,19 @@ def game():
 						let = comp_choice_let()
 
 					finde(let, player)
+					
+					if player.hp == 0:
+						print('YOU DIED')
+						graveyard += 1
+						if graveyard == 4:
+							print('Победа. Смерть всех.')
+							quit()
 
 					if ''.join(pr_word) == word:
 						print('Выиграл ' + player.name)
-						quit()
+						return
 			player.luck = True
+
 
 
 
