@@ -11,6 +11,7 @@ class Player(object):
 		self.hp = hp
 		self.name = random.choice(quality_list).capitalize() + ' ' + random.choice(name_list)
 		self.luck = True
+		self.points = 0
 
 
 def hard_mode():
@@ -54,6 +55,7 @@ def finde(let, player):
 	for i in range(len(word)):
 		if let == word[i]:
 			pr_word[i] = let
+			player.points += 1
 	if let not in word:
 		player.hp -= 1
 		player.luck = False
@@ -71,7 +73,7 @@ def print_alph(what_print):
 
 
 def screen(moover):
-	sleep(3)
+	# sleep(3)
 	os.system('cls')
 	print_word(pr_word)
 	print_alph(alph)
@@ -131,7 +133,7 @@ pr_word = ['#' for i in range(len(word))]
 
 def init_players():
 	global player_one, player_two, player_three, player_four
-	how_players = int(input('Сколько игроков? /Цифра от 0 до 4х/ \n'))
+	how_players = int(input('Сколько игроков? /Цифра от 0 до 4х/? \n'))
 	for i in range(how_players):
 		if i == 0:
 			player_one = Player(1, 'man', hard_mode())
@@ -163,6 +165,11 @@ init_players()
 game()
 
 print('Слово: ', word)
+print("Рейтинг:\n"
+	f"\n Игрок {player_one.name} заработал {player_one.points} очков"
+	f"\n Игрок {player_two.name} заработал {player_two.points} очков"
+	f"\n Игрок {player_three.name} заработал {player_three.points} очков"
+	f"\n Игрок {player_four.name} заработал {player_four.points} очков")
 
 
 # py C:\\Matvey\Programm\Python\dop\pole_chud\pole_chudes.py
