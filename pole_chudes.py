@@ -8,7 +8,7 @@ class Player(object):
 		self.number = number
 		self.master = master
 		self.hp = hp
-		self.name = random.choice(quality_list) + ' ' + random.choice(name_list)
+		self.name = random.choice(quality_list).capitalize() + ' ' + random.choice(name_list)
 		self.luck = True
 
 
@@ -96,9 +96,17 @@ def game():
 
 
 
-with open("C:/Matvey/Programm/Python/dop/text/text.txt", encoding='utf-8') as file:
+with open("C:/Matvey/Programm/Python/dop/text/russian_nouns.txt", encoding='utf-8') as file:
 	word_list = [row.strip() for row in file]
 # word_list = ['слово', 'влад', 'автомобиль']
+
+with open("C:/Matvey/Programm/Python/dop/text/russian_pril.txt", encoding='utf-8') as file:
+	quality_list = [row.strip() for row in file]
+# quality_list = ['Спящий', 'Под камнем лежащий']
+
+with open("C:/Matvey/Programm/Python/dop/text/russian_imena.txt", encoding='utf-8') as file:
+	name_list = [row.strip() for row in file]
+# name_list = ['Иигорь', 'Андрей']
 
 alph = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т',
 		'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
@@ -107,9 +115,6 @@ none_use_alph = alph
 
 word = random.choice(word_list)
 pr_word = ['#' for i in range(len(word))]
-
-quality_list = ['Спящий', 'Под камнем лежащий']
-name_list = ['Иигорь', 'Андрей']
 
 
 def init_players():
