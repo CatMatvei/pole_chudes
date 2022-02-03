@@ -1,4 +1,4 @@
-import random, os
+import random
 
 
 class Player(object):
@@ -8,7 +8,8 @@ class Player(object):
 		self.number = number
 		self.master = master
 		self.hp = hp
-		# self.win = win
+		self.name = random.choice(quality_list) + ' ' + random.choice(name_list)
+		self.luck = True
 
 
 def hard_mode():
@@ -47,13 +48,14 @@ def zamena_alph(let):
 			alph[i] = '_'
 
 
-def finde(let, player_num):
+def finde(let, player):
 	zamena_alph(let)
 	for i in range(len(word)):
 		if let == word[i]:
 			pr_word[i] = let
 	if let not in word:
-		player_num.hp -= 1
+		player.hp -= 1
+		player.luck = False
 
 
 def print_word(what_print):
@@ -67,71 +69,31 @@ def print_alph(what_print):
 	print(pr)
 
 
-def win_print():
-	print('Слово: ', word)
-
-
-def screen():
-	# os.system('cls')
+def screen(moover):
 	print_word(pr_word)
 	print_alph(alph)
+	print(f'Ход {moover.name}, его HP = {moover.hp}')
 
 
 def game():
-	while player_one.hp != 0 or player_two.hp != 0 or player_three.hp != 0 or player_four.hp != 0:
-		for i in range(4):
-			screen()
-			if i == 0 and player_one.hp != 0:
-				if player_one.master == 'man':
-					let = player_choice_let()
-				else:
-					let = comp_choice_let()
+	while True:
+		for player_name in ("player_one", "player_two", 'player_three', 'player_four'):
+			player = globals()[player_name]
+			while player.luck == True:
+				screen(player)
+				if player.hp != 0:
+					if player.master == "man":
+						let = player_choice_let()
+					else:
+						let = comp_choice_let()
 
-				finde(let, player_one)
+					finde(let, player)
 
-				if ''.join(pr_word) == word:
-					print('Выиграл Первый')
-					win_print()
-					quit()
+					if ''.join(pr_word) == word:
+						print('Выиграл ' + player.name)
+						quit()
+			player.luck = True
 
-			elif i == 1 and player_two.hp != 0:
-				if player_two.master == 'man':
-					let = player_choice_let()
-				else:
-					let = comp_choice_let()
-
-				finde(let, player_two)
-
-				if ''.join(pr_word) == word:
-					print('Выиграл Второй')
-					win_print()
-					quit()
-
-			elif i == 2 and player_three.hp != 0:
-				if player_three.master == 'man':
-					let = player_choice_let()
-				else:
-					let = comp_choice_let()
-
-				finde(let, player_three)
-
-				if ''.join(pr_word) == word:
-					print('Выиграл Третий')
-					win_print()
-					quit()
-
-			elif i == 3 and player_four.hp != 0:
-				if player_four.master == 'man':
-					let = player_choice_let()
-				else:
-					let = comp_choice_let()
-
-				finde(let, player_four)
-
-				if ''.join(pr_word) == word:
-					print('Выиграл Четвертый')
-					win_print()
-					quit()
 
 
 with open("C:/Matvey/Programm/Python/dop/text/text.txt", encoding='utf-8') as file:
@@ -145,6 +107,9 @@ none_use_alph = alph
 
 word = random.choice(word_list)
 pr_word = ['#' for i in range(len(word))]
+
+quality_list = ['Спящий', 'Под камнем лежащий']
+name_list = ['Иигорь', 'Андрей']
 
 
 def init_players():
@@ -179,6 +144,8 @@ def init_players():
 
 init_players()
 game()
+
+print('Слово: ', word)
 
 
 # py C:\\Matvey\Programm\Python\dop\pole_chud\pole_chudes.py
