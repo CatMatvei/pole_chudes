@@ -1,5 +1,6 @@
-import random, os
-from time import sleep 
+import random
+import os
+from time import sleep
 
 
 class Player(object):
@@ -9,7 +10,8 @@ class Player(object):
 		self.number = number
 		self.master = master
 		self.hp = hp
-		self.name = random.choice(quality_list).capitalize() + ' ' + random.choice(name_list)
+		self.name = random.choice(quality_list).capitalize(
+		) + ' ' + random.choice(name_list)
 		self.luck = True
 		self.points = 0
 
@@ -26,9 +28,18 @@ def hard_mode():
 	return ret
 
 
-def player_choice_let():
+def choice_let(moover):
+	if moover.master == "man":
+		let = player_choice_let(input())
+	else:
+		let = comp_choice_let()
+	return let
+
+
+def player_choice_let(inp):
 	global none_use_alph
-	let = input('Какая буква?\n')
+	let = inp
+	# let = input('Какая буква?\n')
 	try:
 		none_use_alph.remove(let)
 	except ValueError:
@@ -62,22 +73,39 @@ def finde(let, player):
 
 
 def print_word(what_print):
-	print('[' + ''.join(what_print) + ']')
+	# print('[' + ''.join(what_print) + ']')
+	return ('[' + ''.join(what_print) + ']')
 
 
 def print_alph(what_print):
 	pr = ''
 	for i in range(len(what_print)):
 		pr += what_print[i] + ' '
-	print(pr)
+	# print(pr)
+	return pr
 
 
 def screen(moover):
 	# sleep(3)
-	os.system('cls')
-	print_word(pr_word)
-	print_alph(alph)
-	print(f'Ход {moover.name}, его HP = {moover.hp}')
+	# os.system('cls')
+	print(f'''
+|*******************************************************************|
+|                       Pole Chudes                                 |
+|Неизвестное слово: {print_word(pr_word)}, количество букв: {len(word)}|
+|                                                                   |
+|  Оставшиеся буквы:                                                |
+| {print_alph(alph)}                                                |
+|-------------------------------------------------------------------|
+|Ходит {moover.name}, его HP = {moover.hp}, его очки = {moover.points}|
+|-------------------------------------------------------------------|
+|					Якубович.пнг	Буква? 	буква	|
+| девки.джпг 					огурчики.гиф 	 ааавтомобиль.свг	|
+|																	|
+|===================================================================|
+''')
+	# print_word(pr_word)
+	# print_alph(alph)
+	# print(f'Ход {moover.name}, его HP = {moover.hp}')
 
 
 def game():
@@ -88,13 +116,10 @@ def game():
 			while player.luck == True:
 				screen(player)
 				if player.hp != 0:
-					if player.master == "man":
-						let = player_choice_let()
-					else:
-						let = comp_choice_let()
+					let = choice_let(player)
 
 					finde(let, player)
-					
+
 					if player.hp == 0:
 						print('YOU DIED')
 						graveyard += 1
@@ -106,8 +131,6 @@ def game():
 						print('Выиграл ' + player.name)
 						return
 			player.luck = True
-
-
 
 
 with open("C:/Matvey/Programm/Python/dop/text/russian_nouns.txt", encoding='utf-8') as file:
@@ -125,7 +148,7 @@ with open("C:/Matvey/Programm/Python/dop/text/russian_imena.txt", encoding='utf-
 alph = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т',
 		'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
 
-none_use_alph = alph.copy()
+none_use_alph = alph
 
 word = random.choice(word_list)
 pr_word = ['#' for i in range(len(word))]
@@ -166,10 +189,10 @@ game()
 
 print('Слово: ', word)
 print("Рейтинг:\n"
-	f"\n Игрок {player_one.name} заработал {player_one.points} очков"
-	f"\n Игрок {player_two.name} заработал {player_two.points} очков"
-	f"\n Игрок {player_three.name} заработал {player_three.points} очков"
-	f"\n Игрок {player_four.name} заработал {player_four.points} очков")
+	  f"\n Игрок {player_one.name} заработал {player_one.points} очков"
+	  f"\n Игрок {player_two.name} заработал {player_two.points} очков"
+	  f"\n Игрок {player_three.name} заработал {player_three.points} очков"
+	  f"\n Игрок {player_four.name} заработал {player_four.points} очков")
 
 
-# py C:\\Matvey\Programm\Python\dop\pole_chud\pole_chudes.py
+# py C:\\Matvey\Programm\Python\dop\jld\pole_chudes.py
