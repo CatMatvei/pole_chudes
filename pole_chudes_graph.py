@@ -195,4 +195,4 @@ print("Рейтинг:\n"
 	  f"\n Игрок {player_four.name} заработал {player_four.points} очков")
 
 
-# py C:\\Matvey\Programm\Python\dop\jld\pole_chudes.py
+# py C:\Matvey\Programm\Python\dop\pole_chud\pole_chudes_graph.py
